@@ -1,47 +1,31 @@
-import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
-import qr from "qr-image";
+import qr from 'qr-image';
 
-const app = express();
-const PORT = 5000;
+export default function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Only POST requests allowed' });
+  }
 
-app.use(cors());
-app.use(bodyParser.json());
-
-// Route: Generate QR and send as base64 (no local save)
-app.post("/generate-qr", (req, res) => {
   const { productCode, materialDesc } = req.body;
 
   if (!productCode || !materialDesc) {
-    return res.status(400).send("Missing required fields.");
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
-
 
   try {
     const qrData = JSON.stringify({ productCode, materialDesc });
+    const qrBuffer = qr.imageSync(qrData, { type: 'png' });
+    const base64Image = `data:image/png;base64,${qrBuffer.toString('base64')}`;
 
-    // Generate QR code as PNG buffer
-    const qrBuffer = qr.imageSync(qrData, { type: "png" });
-    // console.log("QrBuffer: ",qrBuffer);
-    // Convert to base64 and send
-    const base64Image = `data:image/png;base64,${qrBuffer.toString("base64")}`;
-    // console.log("Base64 Image:", base64Image);
     res.status(200).json({
-      message: "QR code generated.",
+      message: 'QR code generated.',
       qrImage: base64Image,
     });
-
   } catch (err) {
-    console.error("QR generation failed:", err);
-    res.status(500).send("Failed to generate QR.");
+    console.error('QR generation failed:', err);
+    res.status(500).json({ error: 'Failed to generate QR.' });
   }
-});
+}
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ Server running at {PORT}`);
-});
 
 // import express from "express";
 // import bodyParser from "body-parser";
