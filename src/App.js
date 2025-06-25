@@ -61,7 +61,7 @@ function App() {
       const imageUrl = await getDownloadURL(productImgRef);
 
       // Send product data to backend to generate QR
-      const response = await axios.post("http://localhost:5000/generate-qr", {
+      const response = await axios.post("https://rmqr-rane-chennai.vercel.app/api/generate-qr", {
         productCode,
         materialDesc,
         imageUrl,
