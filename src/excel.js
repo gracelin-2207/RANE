@@ -45,8 +45,8 @@ export default function ExcelReaderScreen() {
       });
 
       setHeaderRow(detectedHeaderRow);
-      console.log('Detected Header Row:', detectedHeaderRow);
-      console.log('Parsed Data:', jsonData);
+      // console.log('Detected Header Row:', detectedHeaderRow);
+      // console.log('Parsed Data:', jsonData);
       setParsedData(jsonData);
       setRows(rawRows);
       setStatus(`✅ Loaded ${jsonData.length} rows. Ready to upload.`);

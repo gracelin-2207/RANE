@@ -68,7 +68,7 @@ function App() {
       });
 
       const qrBase64 = response.data.qrImage; 
-      console.log("QR Base64:", qrBase64);
+      // console.log("QR Base64:", qrBase64);
       const qrBlob = await (await fetch(qrBase64)).blob();
 
       // Upload QR image as PNG
