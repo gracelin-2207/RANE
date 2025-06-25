@@ -67,7 +67,7 @@ function App() {
         imageUrl,
       });
 
-      const qrBase64 = response.data.qrImage; // Should be data:image/png;base64,...
+      const qrBase64 = response.data.qrImage; 
       console.log("QR Base64:", qrBase64);
       const qrBlob = await (await fetch(qrBase64)).blob();
 
@@ -120,10 +120,11 @@ function App() {
           onChange={(e) => setLocation(e.target.value)}
         />
 
-        <div style={{ margin: "10px 0" }}>
-          <video ref={videoRef} autoPlay playsInline width="300" />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <video ref={videoRef} autoPlay playsInline width="300" style={{ marginBottom: "10px" }} />
           <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
         </div>
+
 
         <div style={{ marginBottom: "10px" }}>
           <button onClick={startCamera}>Start Camera</button>
