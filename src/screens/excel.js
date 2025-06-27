@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase'; // Adjust path as needed
+import { db, auth } from '../firebase'; // Adjust path as needed
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ExcelReaderScreen() {
   const [rows, setRows] = useState([]);
   const [headerRow, setHeaderRow] = useState([]);
   const [status, setStatus] = useState('');
   const [parsedData, setParsedData] = useState([]);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+        navigate("/home"); // Already logged in, redirect
+        }
+    });
+
+    return () => unsubscribe(); // cleanup
+    }, [navigate]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];

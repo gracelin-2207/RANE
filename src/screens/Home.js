@@ -1,5 +1,8 @@
 import { useState, useRef } from "react";
-import { storage, db } from "../firebase";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { storage, db, auth } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, doc, setDoc } from "firebase/firestore";
 import axios from "axios";
@@ -11,9 +14,29 @@ function Home() {
   const [productCode, setProductCode] = useState("");
   const [materialDesc, setMaterialDesc] = useState("");
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/");
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
+
+  if (loading) {
+    return <div style={{ textAlign: "center", marginTop: "50px" }}>Checking authentication...</div>;
+  }
 
   // Start the camera
   const startCamera = async () => {
@@ -95,6 +118,23 @@ function Home() {
 
   return (
     <div className="App">
+    <button
+        onClick={() => {
+          signOut(auth);
+          navigate("/");
+        }}
+        style={{
+          marginTop: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#cc0000",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+          cursor: "pointer",
+        }}
+      >
+        Logout
+      </button>
       <header className="App-header">
         <h1>Product QR - Rane</h1>
         <h2>Add Product to Generate QR Code</h2>
@@ -145,9 +185,8 @@ function Home() {
           <button>Open Excel Reader</button>
         </Link>
 
-        {/* <Routes>
-          <Route path="/excel" element={<ExcelReaderScreen />} />
-        </Routes> */}
+      
+
       </header>
     </div>
     
