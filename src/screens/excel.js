@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from './firebase'; // Adjust path as needed
+import { db } from '../firebase'; // Adjust path as needed
 
 export default function ExcelReaderScreen() {
   const [rows, setRows] = useState([]);
