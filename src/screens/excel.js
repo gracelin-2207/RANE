@@ -16,13 +16,13 @@ export default function ExcelReaderScreen() {
   
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user) {
-        navigate("/home"); // Already logged in, redirect
-        }
+      if (!user) {
+        navigate("/");
+      } 
     });
 
-    return () => unsubscribe(); // cleanup
-    }, [navigate]);
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
