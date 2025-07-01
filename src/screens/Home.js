@@ -229,7 +229,7 @@ function Home() {
       if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
         setCameraError("Camera access was denied. Please allow camera permissions in your browser settings.");
       } else {
-        setCameraError("Unable to access camera: " + err.message);
+        setCameraError("Unable to access camera: ");
       }
     }
   };
