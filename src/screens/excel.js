@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db, auth } from '../firebase'; // Adjust path as needed
-import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { db } from '../firebase'; // Adjust path as needed
+// import { useEffect } from "react";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { useNavigate } from "react-router-dom";
 
 
 export default function ExcelReaderScreen() {
   const [rows, setRows] = useState([]);
-  const [headerRow, setHeaderRow] = useState([]);
+  // const [headerRow, setHeaderRow] = useState([]);
   const [status, setStatus] = useState('');
   const [parsedData, setParsedData] = useState([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        navigate("/");
-      } 
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (!user) {
+  //       navigate("/");
+  //     } 
+  //   });
 
-    return () => unsubscribe();
-  }, [navigate]);
+  //   return () => unsubscribe();
+  // }, [navigate]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -45,8 +45,11 @@ export default function ExcelReaderScreen() {
         setStatus('❌ Not enough non-empty rows to determine header.');
         return;
       }
+      
 
-      const detectedHeaderRow = nonEmptyRows[1]; // second non-empty row
+      const detectedHeaderRow = nonEmptyRows[1]; 
+      // setHeaderRow(detectedHeaderRow);
+
       const startDataIndex = rawRows.findIndex(row => row === detectedHeaderRow) + 1;
 
       const dataRows = rawRows.slice(startDataIndex);
@@ -59,7 +62,6 @@ export default function ExcelReaderScreen() {
         return obj;
       });
 
-      setHeaderRow(detectedHeaderRow);
       // console.log('Detected Header Row:', detectedHeaderRow);
       // console.log('Parsed Data:', jsonData);
       setParsedData(jsonData);

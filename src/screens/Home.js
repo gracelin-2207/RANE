@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { storage, db, auth } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -14,7 +14,7 @@ function Home() {
   const [productCode, setProductCode] = useState("");
   const [materialDesc, setMaterialDesc] = useState("");
   const [location, setLocation] = useState("");
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
 
@@ -22,21 +22,21 @@ function Home() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        navigate("/");
-      } else {
-        setLoading(false);
-      }
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (!user) {
+  //       navigate("/");
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, [navigate]);
+  //   return () => unsubscribe();
+  // }, [navigate]);
 
-  if (loading) {
-    return <div style={{ textAlign: "center", marginTop: "50px" }}>Checking authentication...</div>;
-  }
+  // if (loading) {
+  //   return <div style={{ textAlign: "center", marginTop: "50px" }}>Checking authentication...</div>;
+  // }
 
   // Start the camera
   const startCamera = async () => {
