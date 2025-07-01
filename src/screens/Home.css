@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f4f6f9;
@@ -78,5 +78,315 @@ p {
   button {
     width: 100%;
     margin: 8px 0;
+  }
+} */
+
+.home-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0077be;
+  color: #fff;
+  padding: 0.7rem 2rem;
+  box-shadow: 0 2px 8px rgba(26,35,126,0.07);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.navbar-logo-img {
+  height: 32px;
+  width: 32px;
+  margin-right: 12px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2.6rem;
+  margin-left: 32rem;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #ffb300;
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-icon {
+  background: #fff;
+  color: #0077be;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  border: 2px solid #1a237e;
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+
+.profile-icon:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffb300;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  background: #fff;
+  color: #1a237e;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(26,35,126,0.13);
+  padding: 1rem 1.2rem;
+  min-width: 270px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.profile-email {
+  font-size: 0.95rem;
+  margin-bottom: 0.7rem;
+  word-break: break-all;
+}
+
+.logout-btn {
+  background: #cc0000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #b71c1c;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(26,35,126,0.09);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 500px;
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card2 {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(26,35,126,0.09);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 1000px;
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.card h2 {
+  margin-bottom: 1.5rem;
+  color: #1a237e;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group input {
+  padding: 0.7rem 1rem;
+  border: 1px solid #bdbdbd;
+  border-radius: 7px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+.form-group input:focus {
+  border: 1.5px solid #0077be;
+  outline: none;
+}
+
+.camera-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.camera-section video {
+  border-radius: 10px;
+  border: 1.5px solid #bdbdbd;
+  margin-bottom: 0.7rem;
+  background: #f5f7fa;
+}
+
+.camera-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.camera-btns button {
+  background: #0077be;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.camera-btns button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.camera-btns button:hover:not(:disabled) {
+  background: #283593;
+}
+
+.upload-section {
+  margin-bottom: 1.2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.upload-section input[type="file"] {
+  margin-top: 0.5rem;
+}
+
+.upload-btn {
+  background: #ffb300;
+  color: #1a237e;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  transition: background 0.2s;
+}
+
+.upload-btn:hover {
+  background: #ffa000;
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    padding: 1rem 0.2rem;
+  }
+  .card {
+    padding: 1.2rem 0.5rem;
+    margin-top: 1rem;
+  }
+  .navbar {
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0.7rem 0.7rem;
+  }
+}
+
+/* Add to Home.css or Excel.css for ExcelReaderScreen styles */
+.excel-file-input {
+  padding: 0.7rem 1rem;
+  border-radius: 7px;
+  border: 1px solid #bdbdbd;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  background: #fafafa;
+}
+
+.excel-status {
+  color: #007bff;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.excel-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fafafa;
+}
+
+.excel-cell {
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  background: #fff;
+}
+
+@media (max-width: 600px) {
+  .excel-table-wrapper {
+    font-size: 12px;
+  }
+  .excel-cell {
+    padding: 6px;
   }
 }

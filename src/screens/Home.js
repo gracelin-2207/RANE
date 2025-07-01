@@ -1,12 +1,207 @@
+// import { useState, useRef } from "react";
+// // import { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { signOut } from "firebase/auth";
+// import { storage, db, auth } from "../firebase";
+// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// import { collection, doc, setDoc } from "firebase/firestore";
+// import axios from "axios";
+// import { Link } from 'react-router-dom';
+// import "./Home.css";
+
+// function Home() {
+//   const [imageBlob, setImageBlob] = useState(null);
+//   const [productCode, setProductCode] = useState("");
+//   const [materialDesc, setMaterialDesc] = useState("");
+//   const [location, setLocation] = useState("");
+//   // const [loading, setLoading] = useState(true);
+//   const navigate = useNavigate();
+
+
+
+//   const videoRef = useRef(null);
+//   const canvasRef = useRef(null);
+
+//   // useEffect(() => {
+//   //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+//   //     if (!user) {
+//   //       navigate("/");
+//   //     } else {
+//   //       setLoading(false);
+//   //     }
+//   //   });
+
+//   //   return () => unsubscribe();
+//   // }, [navigate]);
+
+//   // if (loading) {
+//   //   return <div style={{ textAlign: "center", marginTop: "50px" }}>Checking authentication...</div>;
+//   // }
+
+//   // Start the camera
+//   const startCamera = async () => {
+//     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+//     if (videoRef.current) videoRef.current.srcObject = stream;
+//   };
+
+//   // Capture from camera
+//   const capturePhoto = () => {
+//     const video = videoRef.current;
+//     const canvas = canvasRef.current;
+//     const context = canvas.getContext("2d");
+
+//     canvas.width = video.videoWidth;
+//     canvas.height = video.videoHeight;
+//     context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+//     canvas.toBlob((blob) => {
+//       setImageBlob(blob);
+//     }, "image/jpeg");
+//   };
+
+//   // Handle image upload
+//   const handleImageUpload = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       setImageBlob(file); // Directly use uploaded file
+//     }
+//   };
+
+//   const handleUpload = async () => {
+//     if (!imageBlob || !productCode || !materialDesc) {
+//       alert("Please fill in all fields and upload or capture an image.");
+//       return;
+//     }
+
+//     const productImgRef = ref(storage, `products/${productCode}.jpg`);
+
+//     try {
+//       // Upload product image
+//       await uploadBytes(productImgRef, imageBlob, {
+//         contentType: "image/jpeg",
+//       });
+//       const imageUrl = await getDownloadURL(productImgRef);
+
+//       // Send product data to backend to generate QR
+//       const response = await axios.post("https://rmqr-rane-chennai.vercel.app/api/generate-qr", {
+//         productCode,
+//         materialDesc,
+//         imageUrl,
+//       });
+
+//       const qrBase64 = response.data.qrImage; 
+//       // console.log("QR Base64:", qrBase64);
+//       const qrBlob = await (await fetch(qrBase64)).blob();
+
+//       // Upload QR image as PNG
+//       const qrRef = ref(storage, `qr_codes/${productCode}_qr.png`);
+//       await uploadBytes(qrRef, qrBlob);
+//       const qrUrl = await getDownloadURL(qrRef);
+
+//       // Save metadata to Firestore
+//       const docRef = doc(collection(db, "products"), productCode);
+//       await setDoc(docRef, {
+//         productCode,
+//         materialDesc,
+//         location,
+//         imageUrl,
+//         qrUrl,
+//         timestamp: new Date(),
+//       });
+
+//       alert("Upload successful & QR generated!");
+//     } catch (error) {
+//       console.error("Upload error:", error);
+//       alert("Upload failed. See console for details.");
+//     }
+//   };
+
+//   return (
+//     <div className="App">
+//     <button
+//         onClick={() => {
+//           signOut(auth);
+//           navigate("/");
+//         }}
+//         style={{
+//           marginTop: "20px",
+//           padding: "10px 20px",
+//           backgroundColor: "#cc0000",
+//           color: "white",
+//           border: "none",
+//           borderRadius: "6px",
+//           cursor: "pointer",
+//         }}
+//       >
+//         Logout
+//       </button>
+//       <header className="App-header">
+//         <h1>Product QR - Rane</h1>
+//         <h2>Add Product to Generate QR Code</h2>
+
+//         <input
+//           type="text"
+//           placeholder="Product Code"
+//           value={productCode}
+//           onChange={(e) => setProductCode(e.target.value)}
+//         />
+//         <input
+//           type="text"
+//           placeholder="Material Description"
+//           value={materialDesc}
+//           onChange={(e) => setMaterialDesc(e.target.value)}
+//         />
+//         <input
+//           type="text"
+//           placeholder="Location"
+//           value={location}
+//           onChange={(e) => setLocation(e.target.value)}
+//         />
+
+//         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+//           <video ref={videoRef} autoPlay playsInline width="300" style={{ marginBottom: "10px" }} />
+//           <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+//         </div>
+
+
+//         <div style={{ marginBottom: "10px" }}>
+//           <button onClick={startCamera}>Start Camera</button>
+//           <button onClick={capturePhoto} disabled={!videoRef.current?.srcObject}>
+//             Capture Photo
+//           </button>
+//         </div>
+
+//         <p>OR upload an image:</p>
+//         <input
+//           type="file"
+//           accept="image/*"
+//           onChange={handleImageUpload}
+//         />
+
+//         <button onClick={handleUpload} style={{ marginTop: "15px" }}>
+//           Upload & Generate QR
+//         </button>
+//         <Link to="/excel">
+//           <button>Open Excel Reader</button>
+//         </Link>
+
+      
+
+//       </header>
+//     </div>
+    
+//   );
+// }
+
+// export default Home;
+
 import { useState, useRef } from "react";
-// import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { storage, db, auth } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, doc, setDoc } from "firebase/firestore";
 import axios from "axios";
-import { Link } from 'react-router-dom';
 import "./Home.css";
 
 function Home() {
@@ -14,37 +209,31 @@ function Home() {
   const [productCode, setProductCode] = useState("");
   const [materialDesc, setMaterialDesc] = useState("");
   const [location, setLocation] = useState("");
-  // const [loading, setLoading] = useState(true);
+  const [profileOpen, setProfileOpen] = useState(false);
+
+  // Replace with actual user email from auth if available
+  const userEmail = auth.currentUser?.email || "user@example.com";
+
   const navigate = useNavigate();
-
-
-
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (!user) {
-  //       navigate("/");
-  //     } else {
-  //       setLoading(false);
-  //     }
-  //   });
+  const [cameraError, setCameraError] = useState(""); // Add this state
 
-  //   return () => unsubscribe();
-  // }, [navigate]);
-
-  // if (loading) {
-  //   return <div style={{ textAlign: "center", marginTop: "50px" }}>Checking authentication...</div>;
-  // }
-
-  // Start the camera
   const startCamera = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    if (videoRef.current) videoRef.current.srcObject = stream;
+    setCameraError(""); // Reset error
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } } });
+      if (videoRef.current) videoRef.current.srcObject = stream;
+    } catch (err) {
+      if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+        setCameraError("Camera access was denied. Please allow camera permissions in your browser settings.");
+      } else {
+        setCameraError("Unable to access camera: " + err.message);
+      }
+    }
   };
 
-  // Capture from camera
   const capturePhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -59,11 +248,10 @@ function Home() {
     }, "image/jpeg");
   };
 
-  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImageBlob(file); // Directly use uploaded file
+      setImageBlob(file);
     }
   };
 
@@ -76,29 +264,24 @@ function Home() {
     const productImgRef = ref(storage, `products/${productCode}.jpg`);
 
     try {
-      // Upload product image
       await uploadBytes(productImgRef, imageBlob, {
         contentType: "image/jpeg",
       });
       const imageUrl = await getDownloadURL(productImgRef);
 
-      // Send product data to backend to generate QR
       const response = await axios.post("https://rmqr-rane-chennai.vercel.app/api/generate-qr", {
         productCode,
         materialDesc,
         imageUrl,
       });
 
-      const qrBase64 = response.data.qrImage; 
-      // console.log("QR Base64:", qrBase64);
+      const qrBase64 = response.data.qrImage;
       const qrBlob = await (await fetch(qrBase64)).blob();
 
-      // Upload QR image as PNG
       const qrRef = ref(storage, `qr_codes/${productCode}_qr.png`);
       await uploadBytes(qrRef, qrBlob);
       const qrUrl = await getDownloadURL(qrRef);
 
-      // Save metadata to Firestore
       const docRef = doc(collection(db, "products"), productCode);
       await setDoc(docRef, {
         productCode,
@@ -117,79 +300,99 @@ function Home() {
   };
 
   return (
-    <div className="App">
-    <button
-        onClick={() => {
-          signOut(auth);
-          navigate("/");
-        }}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#cc0000",
-          color: "white",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
-      <header className="App-header">
-        <h1>Product QR - Rane</h1>
-        <h2>Add Product to Generate QR Code</h2>
-
-        <input
-          type="text"
-          placeholder="Product Code"
-          value={productCode}
-          onChange={(e) => setProductCode(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Material Description"
-          value={materialDesc}
-          onChange={(e) => setMaterialDesc(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <video ref={videoRef} autoPlay playsInline width="300" style={{ marginBottom: "10px" }} />
-          <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+    <div className="home-root">
+      {/* Navbar */}
+      <nav className="navbar">
+          <div className="navbar-logo">
+            <img src="/Rane_Group_Logo.jpg" alt="Logo" className="navbar-logo-img" />
+            RMQR - Rane Madras Limited, Chennai
+          </div>
+        <div className="navbar-links">
+          <Link to="/home" className="nav-link">Home</Link>
+          <Link to="/excel" className="nav-link">Excel Reader</Link>
         </div>
+        <div className="profile-container">
+          <div
+            className="profile-icon"
+            onClick={() => setProfileOpen((open) => !open)}
+            tabIndex={0}
+            // onBlur={() => setTimeout(() => setProfileOpen(false), 150)}
+          >
+            <span role="img" aria-label="profile">👤</span>
+            {profileOpen && (
+              <div className="profile-dropdown">
+                <div className="profile-email">Logged in as<br /><b>{userEmail}</b></div>
+                <button
+                  className="logout-btn"
+                  onClick={() => {
+                    signOut(auth);
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
 
+      {/* Main Content */}
+      <div className="main-content">
+        <div className="card">
+          <h2>Add Product to Generate QR Code</h2>
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Product Code"
+              value={productCode}
+              onChange={(e) => setProductCode(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Material Description"
+              value={materialDesc}
+              onChange={(e) => setMaterialDesc(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <button onClick={startCamera}>Start Camera</button>
-          <button onClick={capturePhoto} disabled={!videoRef.current?.srcObject}>
-            Capture Photo
+          <div className="camera-section">
+            <video ref={videoRef} autoPlay playsInline width="300" />
+            <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+            <div className="camera-btns">
+              <button onClick={startCamera}>Start Camera</button>
+              <button onClick={capturePhoto} disabled={!videoRef.current?.srcObject}>
+                Capture Photo
+              </button>
+            </div>
+              {cameraError && (
+                <div className="camera-error" style={{ color: "#cc0000", marginTop: "0.5rem", fontSize: "0.95rem" }}>
+                  {cameraError}
+                </div>
+              )}
+          </div>
+
+          <div className="upload-section">
+            <p>OR upload an image:</p>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+          </div>
+
+          <button className="upload-btn" onClick={handleUpload}>
+            Upload & Generate QR
           </button>
         </div>
-
-        <p>OR upload an image:</p>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-
-        <button onClick={handleUpload} style={{ marginTop: "15px" }}>
-          Upload & Generate QR
-        </button>
-        <Link to="/excel">
-          <button>Open Excel Reader</button>
-        </Link>
-
-      
-
-      </header>
+      </div>
     </div>
-    
   );
 }
 

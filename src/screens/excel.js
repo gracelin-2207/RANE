@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase'; // Adjust path as needed
-// import { useEffect } from "react";
-// import { onAuthStateChanged } from "firebase/auth";
-// import { useNavigate } from "react-router-dom";
-
+import { db } from '../firebase'; 
+import './Home.css'; 
 
 export default function ExcelReaderScreen() {
   const [rows, setRows] = useState([]);
-  // const [headerRow, setHeaderRow] = useState([]);
   const [status, setStatus] = useState('');
   const [parsedData, setParsedData] = useState([]);
   // const navigate = useNavigate();
@@ -105,101 +102,132 @@ export default function ExcelReaderScreen() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>📄 Excel to Firestore Uploader</h2>
+    <div className="home-root">
+      {/* Navbar */}
+      <nav className="navbar">
+          <div className="navbar-logo">
+            <img src="/Rane_Group_Logo.jpg" alt="Logo" className="navbar-logo-img" />
+            RMQR - Rane Madras Limited, Chennai
+          </div>        <div className="navbar-right">
+          <div className="navbar-links">
+            <Link to="/home" className="nav-link">Home</Link>
+            <Link to="/excel" className="nav-link">Excel Reader</Link>
+          </div>
+        </div>
+      </nav>
 
-        <input type="file" accept=".xls,.xlsx" onChange={handleFileUpload} style={styles.fileInput} />
+      {/* Main Content */}
+      {/* <div className="main-content">
+        <div className="card">
+          <h2>📄 Excel to Firestore Uploader</h2>
+          <input
+            type="file"
+            accept=".xls,.xlsx"
+            onChange={handleFileUpload}
+            className="excel-file-input"
+          />
+      </div>
+      </div> */}
+      <div className="main-content">
+        <div className="card2">
+          <h2>📄 Excel to Firestore Uploader</h2>
+          <input
+            type="file"
+            accept=".xls,.xlsx"
+            onChange={handleFileUpload}
+            className="excel-file-input"
+          />
 
-        {status && <p style={styles.status}>{status}</p>}
+          {status && <p className="excel-status">{status}</p>}
 
-        {rows.length > 0 && (
-          <>
-            <div style={styles.tableWrapper}>
-              <table style={styles.table}>
-                <tbody>
-                  {rows.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                      {row.map((cell, colIndex) => (
-                        <td key={colIndex} style={styles.cell}>
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          {parsedData.length > 0 && (
+            <button className="upload-btn" onClick={handleUpload}>
+                Upload
+            </button>
+          )}
 
-            {parsedData.length > 0 && (
-              <button onClick={handleUpload} style={styles.uploadButton}>
-                🚀 Upload to Firestore
-              </button>
-            )}
-          </>
-        )}
+          {rows.length > 0 && (
+            <>
+              <div className="excel-table-wrapper">
+                <table className="excel-table">
+                  <tbody>
+                    {rows.map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {row.map((cell, colIndex) => (
+                          <td key={colIndex} className="excel-cell">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-const styles = {
-  container: {
-    minHeight: '100vh',
-    backgroundColor: '#f0f2f5',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingTop: '50px',
-    fontFamily: 'Segoe UI, Roboto, sans-serif',
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    padding: '30px 40px',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-    width: '90%',
-    maxWidth: '1000px',
-  },
-  title: {
-    marginBottom: '20px',
-    fontSize: '24px',
-    fontWeight: '600',
-    color: '#333',
-  },
-  fileInput: {
-    padding: '10px',
-    borderRadius: '6px',
-    border: '1px solid #ccc',
-    marginBottom: '20px',
-  },
-  status: {
-    color: '#007bff',
-    marginBottom: '15px',
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-    marginBottom: '20px',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  cell: {
-    border: '1px solid #ddd',
-    padding: '10px',
-    backgroundColor: '#fafafa',
-    fontSize: '14px',
-    color: '#333',
-  },
-  uploadButton: {
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    padding: '12px 24px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    borderRadius: '8px',
-    cursor: 'pointer',
-  },
-};
+// const styles = {
+//   container: {
+//     minHeight: '100vh',
+//     backgroundColor: '#f0f2f5',
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'flex-start',
+//     paddingTop: '50px',
+//     fontFamily: 'Segoe UI, Roboto, sans-serif',
+//   },
+//   card: {
+//     backgroundColor: '#ffffff',
+//     padding: '30px 40px',
+//     borderRadius: '12px',
+//     boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+//     width: '90%',
+//     maxWidth: '1000px',
+//   },
+//   title: {
+//     marginBottom: '20px',
+//     fontSize: '24px',
+//     fontWeight: '600',
+//     color: '#333',
+//   },
+//   fileInput: {
+//     padding: '10px',
+//     borderRadius: '6px',
+//     border: '1px solid #ccc',
+//     marginBottom: '20px',
+//   },
+//   status: {
+//     color: '#007bff',
+//     marginBottom: '15px',
+//   },
+//   tableWrapper: {
+//     overflowX: 'auto',
+//     marginBottom: '20px',
+//   },
+//   table: {
+//     width: '100%',
+//     borderCollapse: 'collapse',
+//   },
+//   cell: {
+//     border: '1px solid #ddd',
+//     padding: '10px',
+//     backgroundColor: '#fafafa',
+//     fontSize: '14px',
+//     color: '#333',
+//   },
+//   uploadButton: {
+//     backgroundColor: '#007bff',
+//     color: '#fff',
+//     border: 'none',
+//     padding: '12px 24px',
+//     fontSize: '16px',
+//     fontWeight: 'bold',
+//     borderRadius: '8px',
+//     cursor: 'pointer',
+//   },
+// };

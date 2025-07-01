@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-// import { useEffect } from "react";
-// import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -14,15 +14,15 @@ function LandingPage() {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
   
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //       if (user) {
-  //       navigate("/home"); // Already logged in, redirect
-  //       }
-  //   });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+        navigate("/home"); // Already logged in, redirect
+        }
+    });
 
-  //   return () => unsubscribe(); // cleanup
-  //   }, [navigate]);
+    return () => unsubscribe(); // cleanup
+    }, [navigate]);
 
 
   const handleLogin = async () => {
