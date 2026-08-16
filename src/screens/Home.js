@@ -269,7 +269,7 @@ function Home() {
       });
       const imageUrl = await getDownloadURL(productImgRef);
 
-      const response = await axios.post("https://rmqr-rane-chennai.vercel.app/api/generate-qr", {
+      const response = await axios.post("https://rmqr-rane-madras-limited.vercel.app/api/generate-qr", {
         productCode,
         materialDesc,
         imageUrl,
