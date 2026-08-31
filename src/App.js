@@ -1,6 +1,7 @@
 // App.js
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./screens/Home";
+import ExistingProducts from "./screens/ExistingProducts";
 import ExcelReaderScreen from "./screens/excel";
 import LandingPage from "./screens/Landing";
 import PrivateRoute from "./screens/PrivateRoute";
@@ -19,6 +20,10 @@ function App() {
             <Home />
           </PrivateRoute>
         }
+      />
+      <Route
+        path="/existing-products"
+        element={<ExistingProducts />}
       />
       <Route
         path="/excel"

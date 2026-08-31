@@ -1,0 +1,138 @@
+.existing-products-page {
+  padding: 30px;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+.existing-products-page h1 {
+  text-align: center;
+  color: #123b75;
+  margin-bottom: 30px;
+}
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.search-container button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #087fbd;
+  color: white;
+  cursor: pointer;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #087fbd;
+  color: white;
+}
+
+td button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background: #ffb000;
+  color: #111;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
+}
+
+.edit-box {
+  width: 450px;
+  max-width: 90%;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.edit-box h2 {
+  color: #123b75;
+  margin-bottom: 20px;
+}
+
+.edit-box p {
+  margin: 8px 0;
+}
+
+.edit-box label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edit-box input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.edit-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-buttons button:first-child {
+  background: #087fbd;
+  color: white;
+}
+
+.edit-buttons button:last-child {
+  background: #ddd;
+}

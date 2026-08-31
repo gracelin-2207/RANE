@@ -310,6 +310,10 @@ function Home() {
         <div className="navbar-links">
           <Link to="/home" className="nav-link">Home</Link>
           <Link to="/excel" className="nav-link">Excel Reader</Link>
+          <Link to="/existing-products" className="nav-link">Existing Products</Link>
+          {/* <Link to="/existing-products">
+            Existing Products
+          </Link> */}
         </div>
         <div className="profile-container">
           <div
@@ -386,6 +390,11 @@ function Home() {
               onChange={handleImageUpload}
             />
           </div>
+          <button
+            onClick={() => navigate("/existing-products")}
+          >
+            Existing Products
+          </button>
 
           <button className="upload-btn" onClick={handleUpload}>
             Upload & Generate QR
